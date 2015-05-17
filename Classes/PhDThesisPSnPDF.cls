@@ -12,12 +12,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % ************************** Class Identification ******************************
-\newcommand\fileversion{1.4.5}
-\newcommand\filedate{2014/12/02}
+\newcommand\fileversion{1.4.5.0}
+\newcommand\filedate{2015/05/16}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{PhDThesisPSnPDF}[\filedate\space A PhD thesis class file
- by Krishna Kumar (v\fileversion)]
-\typeout{https://github.com/kks32/phd-thesis-template/}
+ by Krishna Kumar, forked by Bernard Butler (v\fileversion)]
+\typeout{https://github.com/bbutler-tssg/phd-thesis-template/}
 
 
 % ******************************************************************************
@@ -237,6 +237,10 @@ footnotes.}
 \stop}% 
 
 
+% use System fonts with xelatex, defaults to false, ignored unless xelatex is used
+\newif\ifPHD@useSystemFonts\PHD@useSystemFontsfalse
+\DeclareOption{useSystemFonts}{\PHD@useSystemFontstrue}
+
 % Line Numbers
 \newif\ifPHD@lineno\PHD@linenotrue
 \DeclareOption{lineno}{\PHD@linenotrue}
@@ -271,13 +275,10 @@ supported!}
   \fi
 \fi
 
-
-
 % ******************************************************************************
 % ******************************** Packages ************************************
 % ******************************************************************************
 % ************************** Layout and Formatting *****************************
-\renewcommand\pdfshellescape{1}
 \RequirePackage{lscape}   % Supports Landscape Layout
 \RequirePackage{setspace} % Define line spacing in paragraph
 \RequirePackage{calc}     % To calculate vertical spacing
@@ -285,7 +286,15 @@ supported!}
 % ************************* Conditional Statements *****************************
 \RequirePackage{ifthen}  % conditional statements
 \RequirePackage{ifpdf}    % Check for pdfLaTeX
+\RequirePackage{ifxetex}  % Check for xelatex
+\RequirePackage{etoolbox} % allow more flexible boolean conditions
 
+\newif\ifgeneratePDF
+\ifboolexpr{ bool {pdf} or bool {xetex} }{\generatePDFtrue}{\generatePDFfalse}
+\ifxetex
+\else
+  \renewcommand\pdfshellescape{1}
+\fi
 
 % *********************** Table of Contents & Appendices ***********************
 % add Bibliography, List of figures and tables to contents
@@ -307,17 +316,25 @@ supported!}
 
 % *************************** Graphics and Figures *****************************
 \RequirePackage[usenames, dvipsnames]{color}
-\ifpdf
-        % Convert eps figures to pdf
-        \RequirePackage{epstopdf}
-        \RequirePackage[pdftex]{graphicx}
+\ifgeneratePDF
+        \typeout{::::Generating pdf output::::}
+        \ifpdf
+          \typeout{::::Using pdflatex::::}
+          % Convert eps figures to pdf
+          \RequirePackage{epstopdf}
+          \RequirePackage[pdftex]{graphicx}
+	  \pdfcompresslevel=9
+        \else
+          \typeout{::::Using xelatex::::}
+          \RequirePackage[xetex]{graphicx}
+        \fi
 	\DeclareGraphicsExtensions{.png, .jpg, .pdf}
-	\pdfcompresslevel=9
-	\graphicspath{{Figs/Raster/}{Figs/}}
+	\graphicspath{{Figs/pdfEtc/}{Figs/}}
 \else
+        \typeout{::::Generating dvi and ps output::::}
 	\RequirePackage{graphicx}
 	\DeclareGraphicsExtensions{.eps, .ps}
-	\graphicspath{{Figs/Vector/}{Figs/}}
+	\graphicspath{{Figs/eps/}{Figs/}}
 \fi
 
 
@@ -557,16 +574,28 @@ supported!}
   \RequirePackage{lmodern}
 \fi
 
-\RequirePackage[utf8]{inputenc}
-\RequirePackage[T1]{fontenc}
+\ifxetex
+\ifxetex
+  \ifPHD@useSystemFonts
+    % See http://en.wikibooks.org/wiki/LaTeX/Fonts
+    \usepackage{fontspec}
+    \defaultfontfeatures{Ligatures=TeX} % To support LaTeX quoting style
+  \fi
+\else
+  \RequirePackage[utf8]{inputenc}
+  \RequirePackage[T1]{fontenc}
+\fi
 
-\input{glyphtounicode}
-\pdfglyphtounicode{f_f}{FB00}
-\pdfglyphtounicode{f_i}{FB01}
-\pdfglyphtounicode{f_l}{FB02}
-\pdfglyphtounicode{f_f_i}{FB03}
-\pdfglyphtounicode{f_f_l}{FB04}
-\pdfgentounicode=1
+\ifxetex
+\else
+  \input{glyphtounicode}
+  \pdfglyphtounicode{f_f}{FB00}
+  \pdfglyphtounicode{f_i}{FB01}
+  \pdfglyphtounicode{f_l}{FB02}
+  \pdfglyphtounicode{f_f_i}{FB03}
+  \pdfglyphtounicode{f_f_l}{FB04}
+  \pdfgentounicode=1
+\fi
 
 % Don't break enumeration (etc.) across pages in an ugly manner
 \clubpenalty=10000
@@ -581,13 +610,15 @@ supported!}
 % Moved below other usepackage definitions to fix PDFLaTeX footnote warning
 % Based on the suggestion by John Plaice
 
-\ifsetDVI
-\special{papersize=\the\paperwidth,\the\paperheight}
-\RequirePackage[dvips,unicode=true]{hyperref}
+\ifgeneratePDF
+  \typeout{::::Initialize hyperref for direct pdf output::::}
+  \RequirePackage[unicode=true]{hyperref}
+  \pdfpagewidth=\the\paperwidth
+  \pdfpageheight=\the\paperheight
 \else
-\RequirePackage[unicode=true]{hyperref}
-\pdfpagewidth=\the\paperwidth
-\pdfpageheight=\the\paperheight
+  \typeout{::::Initialize hyperref for ps and pdf output::::}
+  \special{papersize=\the\paperwidth,\the\paperheight}
+  \RequirePackage[dvips,unicode=true]{hyperref}
 \fi
 
 \if@print
@@ -611,13 +642,21 @@ supported!}
     \ifsetCustomMargin
     % Margin to be define in preamble using geometry package
     \else
-        \ifsetDVI
-        % Odd and Even side Margin for binding and set viewmode for PDF
-	\RequirePackage[dvips,paper=\PHD@papersize,hmarginratio=1:1,
-          vmarginratio=1:1,scale=0.75,bindingoffset=5mm]{geometry}
+        \ifgeneratePDF
+          \ifpdf
+            \typeout{::::Initialize pdftex geometry::::}
+	    \RequirePackage[pdftex,paper=\PHD@papersize,hmarginratio=1:1,
+              vmarginratio=1:1,scale=0.75,bindingoffset=5mm]{geometry}
+          \else
+            \typeout{::::Initialize xetex geometry::::}
+	    \RequirePackage[xetex,paper=\PHD@papersize,hmarginratio=1:1,
+              vmarginratio=1:1,scale=0.75,bindingoffset=5mm]{geometry}
+          \fi
         \else
-	\RequirePackage[pdftex,paper=\PHD@papersize,hmarginratio=1:1,
-          vmarginratio=1:1,scale=0.75,bindingoffset=5mm]{geometry}
+          \typeout{::::Initialize dvips geometry::::}
+          % Odd and Even side Margin for binding and set viewmode for PDF
+	  \RequirePackage[dvips,paper=\PHD@papersize,hmarginratio=1:1,
+            vmarginratio=1:1,scale=0.75,bindingoffset=5mm]{geometry}
         \fi
     \fi
 
@@ -651,11 +690,19 @@ supported!}
     \else
 	% No Margin staggering on Odd and Even side
         \ifsetDVI
-	\RequirePackage[dvips,paper=\PHD@papersize,hmarginratio=1:1,
-          vmarginratio=1:1,scale=0.75]{geometry}
+          \typeout{::::Initialize dvips geometry::::}
+	  \RequirePackage[dvips,paper=\PHD@papersize,hmarginratio=1:1,
+            vmarginratio=1:1,scale=0.75]{geometry}
         \else
-	\RequirePackage[pdftex,paper=\PHD@papersize,hmarginratio=1:1,
-          vmarginratio=1:1,scale=0.75]{geometry}
+          \ifpdf
+            \typeout{::::Initialize pdftex geometry::::}
+	    \RequirePackage[pdftex,paper=\PHD@papersize,hmarginratio=1:1,
+              vmarginratio=1:1,scale=0.75]{geometry}
+          \else
+            \typeout{::::Initialize xetex geometry::::}
+	    \RequirePackage[xetex,paper=\PHD@papersize,hmarginratio=1:1,
+              vmarginratio=1:1,scale=0.75]{geometry}
+          \fi
         \fi
     \fi
 
@@ -678,10 +725,11 @@ supported!}
 \urlstyle{leo}
 
 % option to split urls over multiple lines for latex >> DVIPS >> PDF option
-% PDFLaTeX does it automatically.
+% PDFLaTeX and XeLaTeX both do it automatically.
 
-\ifsetDVI
-\RequirePackage{breakurl} % to split the url over multiple lines
+\ifgeneratePDF
+\else
+  \RequirePackage{breakurl} % to split the url over multiple lines
 \fi
 
 
@@ -690,7 +738,7 @@ supported!}
 % ******************************************************************************
 
 % *************************** Setting PDF Meta-Data ****************************
-\ifpdf
+\ifgeneratePDF
 \AtBeginDocument{
   \hypersetup{
     pdftitle = {\@title},

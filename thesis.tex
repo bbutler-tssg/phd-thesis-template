@@ -1,17 +1,23 @@
- % arara: clean: { files: [thesis.aux, thesis.bbl, thesis.blg, thesis.dvi, thesis.fdb_latexmk, thesis.fls, thesis.idx, thesis.ilg, thesis.ind, thesis.lof, thesis.log, thesis.lot, thesis.nlo, thesis.nls, thesis.out, thesis.pdf, thesis.ps, thesis.toc]}
-% arara: latex:  { shell: yes }
+% arara: clean: { files: [thesis.aux, thesis.bbl, thesis.blg, thesis.dvi, thesis.fdb_latexmk, thesis.fls, thesis.idx, thesis.ilg, thesis.ind, thesis.lof, thesis.log, thesis.lot, thesis.nlo, thesis.nls, thesis.out, thesis.pdf, thesis.ps, thesis.toc]}
+%-arara: latex:  { shell: yes }
+%+arara: pdflatex:  { shell: yes }
+% arara: xelatex:  { shell: yes }
 % arara: bibtex
 % arara: nomencl
-% arara: latex
+%-arara: latex
+%+arara: pdflatex:  { shell: yes }
+% arara: xelatex
 % arara: makeindex
-% arara: latex:  { shell: yes }
-% arara: dvips
-% arara: ps2pdf
+%-arara: latex:  { shell: yes }
+%-arara: dvips
+%-arara: ps2pdf
+%+arara: pdflatex:  { shell: yes }
+% arara: xelatex:  { shell: yes }
 
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
 
-\documentclass[a4paper,12pt,times,numbered,print,index]{Classes/PhDThesisPSnPDF}
+\documentclass[a4paper,11pt,print,index,flushleft,times,numbered]{Classes/PhDThesisPSnPDF}
 
 % ******************************************************************************
 % ******************************* Class Options ********************************
@@ -62,6 +68,10 @@
 % package in the preamble.tex
 %
 % default or leave empty: `Latin Modern' font will be loaded.
+%
+% `useSystemFonts' : xelatex ONLY - ignored for other engines. xelatex has
+%  the option of using system fonts (truetype, etc.) to augment the cm-super
+%  and lmodern fonts that come with TeX.
 %
 % ********************** Choosing the Bibliography style ***********************
 %

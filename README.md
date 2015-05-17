@@ -43,6 +43,9 @@ This template supports `latexmk`. To generate DVI, PS and PDF run
 
     latexmk -dvi -ps -pdf thesis.tex
 
+Alternatively, it is possible to use xelatex to generate pdf, using
+
+    latexmk -xelatex thesis.tex
 
 ### Using ARARA (Unix/Linux/Windows)
 
@@ -76,7 +79,7 @@ To clean unwanted clutter (all LaTeX auto-generated files), run:
 
     make clean
 
-__Note__: the `Makefile` itself is take from and maintained at
+__Note__: the `Makefile` itself is taken from and maintained at
 [here](http://code.google.com/p/latex-makefile/).
 
 ### Shell script for PDFLaTeX (Unix/Linux)
