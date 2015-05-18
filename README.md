@@ -1,16 +1,17 @@
-CUED PhD thesis template
+CUED/WIT PhD thesis template
 ========================
-> A LaTeX PhD thesis template for Cambridge University Engineering Department.
+> A LaTeX PhD thesis template for Cambridge University Engineering Department,
+modified for WIT/TSSG students.
 
 [![License MIT](http://img.shields.io/badge/license-MIT-brightgreen.svg)](license.md)
 [![Version](http://img.shields.io/badge/version-1.4.1-brightgreen.svg)](https://github.com/bbutler-tssg/phd-thesis-template/releases/latest)
 ## Author(s)
-*   Krishna Kumar (original; customised for WIT/TSSG: Bernard Butler)
+*   Krishna Kumar (original; customised for WIT/TSSG by Bernard Butler)
 
 --------------------------------------------------------------------------------
 ## Features
 
-*   Layout, heading etc inspired by Alan Davy's thesis
+*   Layout, headings etc. inspired by Alan Davy's thesis
 
 *   Adaptive Title Page: Title page adapts to title length
 
@@ -42,15 +43,21 @@ This template supports `latexmk`. To generate DVI, PS and PDF run
 
     latexmk -dvi -ps -pdf thesis.tex
 
-Alternatively, it is possible to use xelatex to generate pdf, using
+Alternatively, it is possible to use xelatex to generate the pdf, using
 
     latexmk -xelatex thesis.tex
 
+**The `xelatex` build will fail if there are accented characters in the
+source and the `useSystemFonts` option is not passed to `PhDThesisPSnPDF`.**
+
 ### Using ARARA (Unix/Linux/Windows)
 
-This template supports `arara`. You can edit the arara commands in `thesis.tex` to suit your needs. Default is set to LATEX >> DVI >> PS2PDF with nomenclature and make index support.
+This template supports `arara`. You can edit the arara commands in `thesis.tex` to suit your needs. Default is set to LATEX >> DVI >> PS2PDF with `glossaries` and make index support.
 
     arara -v thesis.tex
+
+**You can choose other types of build, e.g., using `pdflatex` by
+commenting/uncommenting the relevant lines at the beginning of `thesis.tex`.**
 
 ### Using the make file (Unix/Linux)
 
@@ -340,7 +347,7 @@ In `add user command` type `makenomeclature:makenomenclature` on the left pane a
 
 Alternatively, you can use the `compile-thesis-windows.bat` file or run `make` on Unix / Linux / MacOS
 
-** This section is obsolete - `nomenclature` has been superseded by `glossaries` **
+**This section is obsolete - `nomenclature` has been superseded by `glossaries`**
 
 ## To-do Notes
 
@@ -355,23 +362,33 @@ To include custom to-do notes in your pdf document use  `\mynote{Hey! I have a n
 		\newcommand{\listoftodos}{}
 	\fi
 
-## Using this template
+## Installing and Using this template
 
-Users should clone or fork from this [repo](http://github.com/bbutler-tssg/phd-thesis-template). The remaining comments in this section apply to their working version.
+### Installation
 
-They should
+1. Clone or fork from this [repo](https://github.com/bbutler-tssg/phd-thesis-template-fork-wit).
 
-1)  enter their personal details in `thesis-info.tex`.
+2. In their local (working) repo, users should checkout and switch to the relevant tracking branch:
 
-2)  use `Preamble\preable.tex` to place any configuration settings (packages to use, etc.).
+    git checkout -b witTssg origin/witTssg
 
-3)  place their text content in tex files such as `Abstract/abstract.tex` and `Chapter2\chapter2.tex`.
+3. Optionally, they can install `PhDThesisPSnPDF.cls` in their local `texmf` tree.
 
-4)  place their diagrams or other graphical content in `Figs` directories.
+### Usage
 
-5)  place their references in the `References` directory.
+The advice in this section applies to the user's local (working) copy.
 
-6)  manage the overall thesis from the master `thesis.tex` document.
+1.  Enter personal details in `thesis-info.tex`.
+
+2.  Put configuration settings (packages to use, etc.) in  `Preamble/preamble.tex`.
+
+3.  Write text content in tex files such as `Abstract/abstract.tex` and `Chapter2/chapter2.tex`.
+
+4.  Put diagrams or other graphical content in `Figs` directories.
+
+5.  Put bibliographic references in the `References` directory.
+
+6.  Manage the overall thesis from the master `thesis.tex` document.
 
 ## General guidelines
 [Why is it important to follow good practices and not get killed by a Velociraptor ;)](http://www.xkcd.com/292/)
