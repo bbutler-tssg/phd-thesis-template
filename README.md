@@ -2,16 +2,15 @@ CUED PhD thesis template
 ========================
 > A LaTeX PhD thesis template for Cambridge University Engineering Department.
 
-[![Build Status](https://api.travis-ci.org/kks32/phd-thesis-template.svg)](https://travis-ci.org/kks32/phd-thesis-template)
 [![License MIT](http://img.shields.io/badge/license-MIT-brightgreen.svg)](license.md)
-[![Version](http://img.shields.io/badge/version-1.4.1-brightgreen.svg)](https://github.com/kks32/phd-thesis-template/releases/latest)
+[![Version](http://img.shields.io/badge/version-1.4.1-brightgreen.svg)](https://github.com/bbutler-tssg/phd-thesis-template/releases/latest)
 ## Author(s)
-*   Krishna Kumar
+*   Krishna Kumar (original; customised for WIT/TSSG: Bernard Butler)
 
 --------------------------------------------------------------------------------
 ## Features
 
-*   Conforms to the Student Registry PhD dissertation guidelines and CUED PhD guidelines
+*   Layout, heading etc inspired by Alan Davy's thesis
 
 *   Adaptive Title Page: Title page adapts to title length
 
@@ -31,7 +30,7 @@ CUED PhD thesis template
 
 *   Draft mode: Draft water mark, timestamp, version numbering and line numbering
 
-*   A LyX Template is now available at [https://github.com/kks32/PhDThesisLyX/](https://github.com/kks32/PhDThesisLyX/)
+*   Build using arara, latexmk or manually
 
 --------------------------------------------------------------------------------
 
@@ -82,6 +81,8 @@ To clean unwanted clutter (all LaTeX auto-generated files), run:
 __Note__: the `Makefile` itself is taken from and maintained at
 [here](http://code.google.com/p/latex-makefile/).
 
+**Known bug: the Makefile needs to be updated to handle the new glossaries process**
+
 ### Shell script for PDFLaTeX (Unix/Linux)
 
 Usage: `sh ./compile-thesis.sh [OPTIONS] [filename]`
@@ -90,6 +91,8 @@ Usage: `sh ./compile-thesis.sh [OPTIONS] [filename]`
 
 [option]  clean: removes temporary files - no filename required
 
+**Known bug: the shell script needs to be updated to handle the new glossaries process**
+
 ### Using the batch file on Windows OS (PDFLaTeX)
 
 *    Open command prompt and navigate to the directory with the tex file. Run:
@@ -97,6 +100,8 @@ Usage: `sh ./compile-thesis.sh [OPTIONS] [filename]`
     `compile-thesis-windows.bat`.
 
 *    Alternatively, double click on `compile-thesis-windows.bat`
+
+**Known bug: the batch script needs to be updated to handle the new glossaries process**
 
 -------------------------------------------------------------------------------
 
@@ -157,15 +162,10 @@ The front page (title page) resizes to fit your title length. You can modify the
 
 * `\subtitle` (optional): Adds a subtitle to your thesis.
 
-* `\college` (optional): This option adds the name of your college on the bottom left.
+* `\college` (optional): This option does not apply to WIT.
 
 If `\college` is defined, the bottom of the title page will look like this:
 
-        King's College 			   			                                            2014
-
-If `\college` is undefined or blank, the `degreedate` will be centered.
-
-                                                2014
 ### Abstract separate
 
 *  A separate abstract with the title of the PhD and the candidate name has to be submitted to the Student Registry. This can be generated using `abstract` option in the document class. Ignore subsequent warnings about skipping sections (if any).
@@ -236,6 +236,8 @@ the bottom of the page. Pagewise line numbering is added on every page. `draft` 
 * (Overview of Bibtex-Styles with preview)[http://nodonn.tipido.net/bibstyle.php?]
 
 * If you would like to use biblatex instead of natbib. Pass the option `custombib` in the documentclass. In the `preamble.tex` file, edit the custombib section. Make sure you don't load the natbib package and you can specify the layout of your references in `thesis.tex` in the reference section. If you are using `biber` as backend, run `pdflatex thesis.tex >> biber thesis >> pdflatex thesis.tex >> biber thesis >> pdflatex thesis.tex`. If you are using the default natbib package, don't worry about this.
+
+* For WIT, authoryear citation style is required and is the one used in thesis.tex. though it is possible to override this setting.
 
 ### Choosing the page style
 
@@ -338,6 +340,8 @@ In `add user command` type `makenomeclature:makenomenclature` on the left pane a
 
 Alternatively, you can use the `compile-thesis-windows.bat` file or run `make` on Unix / Linux / MacOS
 
+** This section is obsolete - `nomenclature` has been superseded by `glossaries` **
+
 ## To-do Notes
 
 To include custom to-do notes in your pdf document use  `\mynote{Hey! I have a note}` anywhere in your chapters. To activate this feature, you need to uncomment the following lines in `preamble.tex`. To-do notes will be available only in the `draft` or `draftclassic` and not in the final thesis.
@@ -351,6 +355,23 @@ To include custom to-do notes in your pdf document use  `\mynote{Hey! I have a n
 		\newcommand{\listoftodos}{}
 	\fi
 
+## Using this template
+
+Users should clone or fork from this [repo](http://github.com/bbutler-tssg/phd-thesis-template). The remaining comments in this section apply to their working version.
+
+They should
+
+1)  enter their personal details in `thesis-info.tex`.
+
+2)  use `Preamble\preable.tex` to place any configuration settings (packages to use, etc.).
+
+3)  place their text content in tex files such as `Abstract/abstract.tex` and `Chapter2\chapter2.tex`.
+
+4)  place their diagrams or other graphical content in `Figs` directories.
+
+5)  place their references in the `References` directory.
+
+6)  manage the overall thesis from the master `thesis.tex` document.
 
 ## General guidelines
 [Why is it important to follow good practices and not get killed by a Velociraptor ;)](http://www.xkcd.com/292/)

@@ -302,9 +302,9 @@ supported!}
 % Add appendices
 \RequirePackage[title,titletoc]{appendix}
 
-\renewcommand{\contentsname}{Table of contents}
-\renewcommand{\listfigurename}{List of figures}
-\renewcommand{\listtablename}{List of tables}
+\renewcommand{\contentsname}{Contents}
+\renewcommand{\listfigurename}{List of Figures}
+\renewcommand{\listtablename}{List of Tables}
 
 % Hides Contents appearing from TOC, but adds it to bookmarks
 \let\temptableofcontents\tableofcontents
@@ -575,7 +575,6 @@ supported!}
 \fi
 
 \ifxetex
-\ifxetex
   \ifPHD@useSystemFonts
     % See http://en.wikibooks.org/wiki/LaTeX/Fonts
     \usepackage{fontspec}
@@ -732,6 +731,26 @@ supported!}
   \RequirePackage{breakurl} % to split the url over multiple lines
 \fi
 
+% ************Glossary, Ancronyms, Nomenclature (List of Symbols)***************
+% Replacing nomencl package with the more flexible glossaries package
+% See http://en.wikibooks.org/wiki/LaTeX/Glossary
+\typeout{111111}
+\RequirePackage[acronym,toc,style=tree]{glossaries}
+\typeout{222222}
+
+% define handy \defAcronym}[2] command to create a new acronym in the acronyms table,
+% replacing the \newacronym[3] command
+\newcommand{\defAcronym}[2]{\newacronym{#1}{#1}{#2}}
+\renewcommand*{\acronymname}{List of Acronyms}
+
+% List of Symbols
+\newcommand{\nomname}{List of Symbols}
+\newglossary{symbols}{sym}{sbl}{\nomname}
+\typeout{333333}
+
+% Create the file(s) to be indexed
+\makeglossaries
+\typeout{444444}
 
 % ******************************************************************************
 % **************************** Pre-defined Settings ****************************
@@ -785,6 +804,7 @@ wish to left align your text}
 
 \RequirePackage{fancyhdr} % Define custom header
 
+\typeout{555555}
 % Set Fancy Header Command is defined to Load FancyHdr after Geometry is defined
 \newcommand{\setFancyHdr}{
 
@@ -909,6 +929,9 @@ wish to left align your text}
 % Submission Text
 \newcommand{\submissiontext}{This dissertation is submitted for the degree of }
 
+% Supervisor name(s)
+\newcommand{\@supervisor}{}
+\newcommand{\supervisor}[1]{\renewcommand{\@supervisor}{#1}}
 
 % keywords (These keywords will appear in the PDF meta-information
 % called `pdfkeywords`.)
@@ -990,11 +1013,11 @@ wish to left align your text}
 \centering \Large {\@subtitle}
 } % subtitle is defined
 
-\vspace{.25\PHD@titlepagespacing}
+\vspace{.2\PHD@titlepagespacing}
 
 % Crest
 {\@crest \par}
-\vspace{.2\PHD@titlepagespacing}
+\vspace{.15\PHD@titlepagespacing}
 
 % Author
 {\Large \bfseries{\@author} \par}
@@ -1010,6 +1033,10 @@ wish to left align your text}
 {\large \submissiontext \par}
 \vspace*{1ex}
 {\large \textit {\@degreetitle} \par}
+
+\vspace*{1em}
+% Name(s) of supervisor(s)
+{\large \@supervisor \par}
 
 \end{center}
 
@@ -1080,39 +1107,39 @@ wish to left align your text}
 
 
 
-% ******************************* Nomenclature *********************************
-\RequirePackage[intoc]{nomencl}
-\makenomenclature
-\renewcommand{\nomgroup}[1]{%
-\ifthenelse{\equal{#1}{A}}{\item[\textbf{Roman Symbols}]}{%
-\ifthenelse{\equal{#1}{G}}{\item[\textbf{Greek Symbols}]}{%
-\ifthenelse{\equal{#1}{Z}}{\item[\textbf{Acronyms / Abbreviations}]}{%
-\ifthenelse{\equal{#1}{R}}{\item[\textbf{Superscripts}]}{%
-\ifthenelse{\equal{#1}{S}}{\item[\textbf{Subscripts}]}{%
-\ifthenelse{\equal{#1}{X}}{\item[\textbf{Other Symbols}]}
-{}
-}% matches mathematical symbols > X
-}% matches Subscripts           > S
-}% matches Superscripts         > R
-}% matches Abbreviations        > Z
-}% matches Greek Symbols        > G
-}% matches Roman Symbols        > A
-
-% To add nomenclature in the header
-\renewcommand{\nompreamble}{\markboth{\nomname}{\nomname}}
-
-% Add nomenclature to contents and print out nomenclature
-\newcommand{\printnomencl}[1][]{
-\ifthenelse{\equal {#1}{}}
-{\printnomenclature}
-{\printnomenclature[#1]}
-%\addcontentsline{toc}{chapter}{\nomname}
-}
+%% ******************************* Nomenclature *********************************
+%\RequirePackage[intoc]{nomencl}
+%\makenomenclature
+%\renewcommand{\nomgroup}[1]{%
+%\ifthenelse{\equal{#1}{A}}{\item[\textbf{Roman Symbols}]}{%
+%\ifthenelse{\equal{#1}{G}}{\item[\textbf{Greek Symbols}]}{%
+%\ifthenelse{\equal{#1}{Z}}{\item[\textbf{Acronyms / Abbreviations}]}{%
+%\ifthenelse{\equal{#1}{R}}{\item[\textbf{Superscripts}]}{%
+%\ifthenelse{\equal{#1}{S}}{\item[\textbf{Subscripts}]}{%
+%\ifthenelse{\equal{#1}{X}}{\item[\textbf{Other Symbols}]}
+%{}
+%}% matches mathematical symbols > X
+%}% matches Subscripts           > S
+%}% matches Superscripts         > R
+%}% matches Abbreviations        > Z
+%}% matches Greek Symbols        > G
+%}% matches Roman Symbols        > A
+%
+%% To add nomenclature in the header
+%\renewcommand{\nompreamble}{\markboth{\nomname}{\nomname}}
+%
+%% Add nomenclature to contents and print out nomenclature
+%\newcommand{\printnomencl}[1][]{
+%\ifthenelse{\equal {#1}{}}
+%{\printnomenclature}
+%{\printnomenclature[#1]}
+%%\addcontentsline{toc}{chapter}{\nomname}
+%}
 
 
 % ***************************** Create the index *******************************
 \ifPHD@index
-    \RequirePackage{makeidx}
+%    \RequirePackage{makeidx}
     \makeindex
     \newcommand{\printthesisindex}{
         \cleardoublepage
@@ -1169,7 +1196,8 @@ wish to left align your text}
 	\setsinglecolumn
 	\begin{center}
 		{ \Large {\bfseries {\@title}} \par}
-		{{\large \vspace*{1em} \@author} \par}
+		{{\large \vspace*{1em} {\bfseries \@author}} \par}
+		{{\large \vspace*{1em} \@supervisor} \par}
 	\end{center}
 
 \else
@@ -1235,6 +1263,8 @@ wish to left align your text}
 \large \submissiontext \par
 \vspace*{1ex}
 \large \textit {\@degreetitle} \par
+\vspace*{1em}
+\large \@supervisor \par
 \end{center}
 \end{minipage}
 \end{lrbox}
