@@ -1,7 +1,9 @@
 *.tdo*
 .DS_Store*
 *.aux*
+*.loa*
 *.log*
+*.lol*
 *.lof*
 *.lot*
 *.out*

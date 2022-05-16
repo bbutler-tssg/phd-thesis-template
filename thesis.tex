@@ -1,7 +1,7 @@
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
 
-\documentclass[a4paper,12pt,times,numbered,print,index]{PhDThesisPSnPDF}
+\documentclass[a4paper,12pt,times,numbered,print,index]{Classes/PhDThesisPSnPDF}
 
 % ******************************************************************************
 % ******************************* Class Options ********************************
@@ -84,6 +84,7 @@
 
 % ************************ Thesis Information & Meta-data **********************
 % Thesis title and author information, refernce file for biblatex
+\input{meta}
 \input{thesis-info}
 
 % ***************************** Abstract Separate ******************************
@@ -91,7 +92,7 @@
 % author name for submission to the Student Registry, use the `abstract' option in
 % the document class.
 
-\ifdefineAbstract
+\ifdefineAbstract%
  \pagestyle{empty}
  \includeonly{Declaration/declaration, Abstract/abstract}
 \fi
@@ -102,7 +103,7 @@
 % Useful option to review a particular chapter or to send it to supervisior.
 % To use choose `chapter' option in the document class
 
-\ifdefineChapter
+\ifdefineChapter%
  \includeonly{Chapter3/chapter3}
 \fi
 
@@ -118,7 +119,7 @@
 \include{Acknowledgement/acknowledgement}
 \include{Abstract/abstract}
 
-% *********************** Adding TOC and List of Figures ***********************
+% *********************** Adding TOC and List of Figures etc. ******************
 
 \tableofcontents
 
@@ -126,13 +127,22 @@
 
 \listoftables
 
+\addcontentsline{toc}{chapter}{List of Algorithms}
+\listofalgorithms%
+
+%\renewcommand*{\float@listhead}[1]{\chapter{#1}}
+%\listof{listing}{List of Code Fragments}
+%\renewcommand\listoflistingscaption{List of Source Examples}
+\addcontentsline{toc}{chapter}{\lstlistlistingname}
+\lstlistoflistings%
+
 % \printnomenclature[space] space can be set as 2em between symbol and description
 %\printnomenclature[3em]
 
-\printnomenclature
+\printnomenclature%
 
 % ******************************** Main Matter *********************************
-\mainmatter
+\mainmatter%
 
 \include{Chapter1/chapter1}
 \include{Chapter2/chapter2}
@@ -158,7 +168,7 @@
 \bibliographystyle{apalike}
 %\bibliographystyle{unsrt} % Use for unsorted references  
 %\bibliographystyle{plainnat} % use this to have URLs listed in References
-\cleardoublepage
+\cleardoublepage%
 \bibliography{References/references} % Path to your References.bib file
 
 
@@ -182,6 +192,6 @@
 \end{appendices}
 
 % *************************************** Index ********************************
-\printthesisindex % If index is present
+\printthesisindex% If index is present
 
 \end{document}

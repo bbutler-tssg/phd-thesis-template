@@ -4,15 +4,15 @@
 % Add `custommargin' in the document class options to use this section
 % Set {innerside margin / outerside margin / topmargin / bottom margin}  and
 % other page dimensions
-\ifsetCustomMargin
+\ifsetCustomMargin%
   \RequirePackage[left=37mm,right=30mm,top=35mm,bottom=30mm]{geometry}
-  \setFancyHdr % To apply fancy header after geometry package is loaded
+  \setFancyHdr% To apply fancy header after geometry package is loaded
 \fi
 
 % Add spaces between paragraphs
 %\setlength{\parskip}{0.5em}
 % Ragged bottom avoids extra whitespaces between paragraphs
-\raggedbottom
+\raggedbottom%
 % To remove the excess top spacing for enumeration, list and description
 %\usepackage{enumitem}
 %\setlist[enumerate,itemize,description]{topsep=0em}
@@ -22,7 +22,7 @@
 
 % Add `customfont' in the document class option to use this section
 
-\ifsetCustomFont
+\ifsetCustomFont%
   % Set your custom font here and use `customfont' in options. Leave empty to
   % load computer modern font (default LaTeX font).
   %\RequirePackage{helvet}
@@ -47,7 +47,35 @@
 % ************************* Algorithms and Pseudocode **************************
 
 %\usepackage{algpseudocode}
+% See http://tex.stackexchange.com/questions/159558/how-to-remove-end-if-in-algorithms
+\usepackage[noend]{algpseudocode}
 
+% Provide a float environment for algorithms
+\usepackage[chapter]{algorithm}
+% Type the algorithms themselves
+\usepackage{algorithmicx}
+
+% Have improved comments in algorithmic code
+\definecolor{algCommentColor}{gray}{0.4} % http://en.wikibooks.org/wiki/LaTeX/Colors
+\algrenewcommand{\algorithmiccomment}[1]{\textcolor{algCommentColor}{/* #1 */}}
+\definecolor{lightGreyText}{gray}{0.6} % http://en.wikibooks.org/wiki/LaTeX/Colors
+\newcommand{\lgt}[1]{\textcolor{lightGreyText}{#1}}
+
+% Get more usable linespace in highly indented code
+\renewcommand{\algorithmicindent}{1em} % default is 1.5em
+
+% See http://tex.stackexchange.com/questions/172751/how-change-font-family-in-algorithmic-package
+\makeatletter
+\algrenewcommand\ALG@beginalgorithmic{\footnotesize}
+\makeatother
+
+% Have improved colorized listings
+% Might need to install pygments via conda first: conda install -c anaconda pygments
+%\usepackage[chapter,cache=false]{minted}
+%%\usemintedstyle{colorful}
+%\usemintedstyle{bw}
+% Alternatively, use listings
+\usepackage{listings}
 
 % ********************Captions and Hyperreferencing / URL **********************
 
@@ -112,7 +140,7 @@
 %\usepackage{cleveref} %Referencing without need to explicitly state fig /table
 
 % Add `custombib' in the document class option to use this section
-\ifuseCustomBib
+\ifuseCustomBib%
    \RequirePackage[square, sort, numbers, authoryear]{natbib} % CustomBib
 
 % If you would like to use biblatex for your reference management, as opposed to the default `natbibpackage` pass the option `custombib` in the document class. Comment out the previous line to make sure you don't load the natbib package. Uncomment the following lines and specify the location of references.bib file
@@ -123,7 +151,7 @@
 \fi
 
 % changes the default name `Bibliography` -> `References'
-\renewcommand{\bibname}{References}
+%\renewcommand{\bibname}{References}
 
 
 % ******************************************************************************
@@ -132,14 +160,15 @@
 
 % *********** To change the name of Table of Contents / LOF and LOT ************
 
-%\renewcommand{\contentsname}{My Table of Contents}
-%\renewcommand{\listfigurename}{My List of Figures}
-%\renewcommand{\listtablename}{My List of Tables}
+\renewcommand{\contentsname}{Contents}
+\renewcommand{\listfigurename}{List of Figures}
+\renewcommand{\listtablename}{List of Tables}
+\renewcommand{\lstlistlistingname}{List of Code Examples}
 
 
 % ********************** TOC depth and numbering depth *************************
 
-\setcounter{secnumdepth}{2}
+\setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{2}
 
 
@@ -148,7 +177,7 @@
 % To change the name of the Nomenclature section, uncomment the following line
 
 %\renewcommand{\nomname}{Symbols}
-
+\input{nomenclature}
 
 % ********************************* Appendix ***********************************
 
