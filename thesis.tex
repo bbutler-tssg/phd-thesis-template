@@ -1,26 +1,7 @@
-% arara: clean: { files: [thesis.aux, thesis.bbl, thesis.blg, thesis.dvi, thesis.fdb_latexmk, thesis.fls, thesis.idx, thesis.ilg, thesis.ind, thesis.loa, thesis.lof, thesis.log, thesis.lot, thesis.nlo, thesis.nls, thesis.out, thesis.pdf, thesis.ps, thesis.toc, thesis.loa thesis.glsdefs thesis.ist thesis.glg thesis.gls thesis.glo thesis.alg thesis.acn thesis.acr thesis.slg thesis.sbl thesis.sym]}
-% arara: latex:  { shell: yes }
-%+arara: pdflatex:  { shell: yes }
-%*arara: xelatex:  { shell: yes }
-% arara: bibtex
-% arara: makeglossaries
-% arara: latex
-%+arara: pdflatex:  { shell: yes }
-%*arara: xelatex
-% arara: makeindex
-% arara: latex:  { shell: yes }
-%+arara: pdflatex:  { shell: yes }
-%*arara: xelatex:  { shell: yes }
-% arara: latex:  { shell: yes }
-% arara: dvips
-% arara: ps2pdf
-%+arara: pdflatex:  { shell: yes }
-%*arara: xelatex:  { shell: yes }
-
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
 
-\documentclass[a4paper,11pt,print,index,flushleft,times,authoryear]{Classes/PhDThesisPSnPDF}
+\documentclass[a4paper,12pt,times,numbered,print,index]{PhDThesisPSnPDF}
 
 % ******************************************************************************
 % ******************************* Class Options ********************************
@@ -42,9 +23,9 @@
 %
 % `index': For index at the end of the thesis
 %
-% `draft': For draft mode without loading any images (same as draft in book)
+% `draftclassic': For draft mode without loading any images (same as draft in book)
 %
-% `draftmode': Special draft mode with line numbers, images, and water mark with
+% `draft': Special draft mode with line numbers, images, and water mark with
 % timestamp and custom text. Position of the text can also be modified.
 %
 % `abstract': To generate only the title page and abstract page with
@@ -72,10 +53,6 @@
 %
 % default or leave empty: `Latin Modern' font will be loaded.
 %
-% `useSystemFonts' : xelatex ONLY - ignored for other engines. xelatex has
-%  the option of using system fonts (truetype, etc.) to augment the cm-super
-%  and lmodern fonts that come with TeX.
-%
 % ********************** Choosing the Bibliography style ***********************
 %
 % `authoryear': For author-year citation eg., Krishna (2013)
@@ -98,6 +75,8 @@
 % `PageStyleII': Chapter Name on Even Side (Left Even) in Header. Section Number
 % and Section Name in Header on Odd Side (Right Odd). Page numbering in footer
 
+% Uncomment to change page style
+%\pagestyle{PageStyleII}
 
 % ********************************** Preamble **********************************
 % Preamble: Contains packages and user-defined commands and settings
@@ -130,54 +109,27 @@
 % ******************************** Front Matter ********************************
 \begin{document}
 
-\onehalfspacing
-
 \frontmatter
 
-\begin{titlepage}
-  \maketitle
-\end{titlepage}
-
+\maketitle
 
 \include{Dedication/dedication}
 \include{Declaration/declaration}
 \include{Acknowledgement/acknowledgement}
 \include{Abstract/abstract}
-% See http://tex.stackexchange.com/questions/25798/how-can-i-add-abstract-and-acknowledgement-pages-into-the-table-of-contents
-\addcontentsline{toc}{chapter}{Abstract}
 
 % *********************** Adding TOC and List of Figures ***********************
 
-\input{acronyms.tex}
-\input{glossary.tex}
-\input{symbols.tex}
-
 \tableofcontents
 
-{ % See http://tex.stackexchange.com/questions/69184/remove-blank-page-between-list-of-figures-and-list-of-tables
 \listoffigures
-
-\let\cleardoublepage\clearpage
 
 \listoftables
 
-\let\cleardoublepage\clearpage
+% \printnomenclature[space] space can be set as 2em between symbol and description
+%\printnomenclature[3em]
 
-\listofalgorithms
-\addcontentsline{toc}{chapter}{List of Algorithms}
-
-\let\cleardoublepage\clearpage
-
-\printglossary[type=\acronymtype]
-
-\let\cleardoublepage\clearpage
-
-\printglossary[type=symbols]
-
-\let\cleardoublepage\clearpage
-
-\printglossary[type=main]
-}
+\printnomenclature
 
 % ******************************** Main Matter *********************************
 \mainmatter
@@ -204,6 +156,7 @@
 % Reference styles: http://sites.stat.psu.edu/~surajit/present/bib.htm
 
 \bibliographystyle{apalike}
+%\bibliographystyle{unsrt} % Use for unsorted references  
 %\bibliographystyle{plainnat} % use this to have URLs listed in References
 \cleardoublepage
 \bibliography{References/references} % Path to your References.bib file

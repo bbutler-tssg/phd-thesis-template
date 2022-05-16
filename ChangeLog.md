@@ -1,4 +1,49 @@
 ## Change log
+### 2018/04/12 - Version 2.4
+> Commit f0f8f7110318a36df092ecbd26e4c035ad0c03cb
+*   Fix biblatex styling in custom options
+
+### 2018/04/03 - Version 2.3.2
+> Commit 85a8d91bcd9e97a7b5bda63d1913f07470dbdcfd
+*   Fixes #154 XeLaTeX compilation issues on unix
+
+### 2016/04/23 - Version 2.3.1
+> Commit 7e4d9a261dd4e5dbdbf75c642ce2bbaa7e87429b
+*   Fixes #124 Pagestyle options
+
+### 2016/03/19 - Version 2.3
+> Commit 665937d81ff7c561569bbec240b4fa703063be3f
+*   Fixes #118 and #119 on option processing and font sizes
+
+### 2016/10/20 - Version 2.2.2
+> Commit 7867b367fe6c9523461f5bcd91a8f4f5e92badb2
+*   Fixes issue of non-centered style for advisors and supervisors
+
+### 2016/07/04 - Version 2.2.1
+> Commit ef6e4394f3dd5a7442c2f48f3196d7d0a15d077f
+*   Removed deprecated unused function romanpages defined in `preamble.tex`.
+*   https://tex.stackexchange.com/questions/328438/roman-numbering-not-enumerating-latex-error
+*   Fixes issue #101 incorrect page numbering scheme in `draft`.
+*   Deprecated function `draftmode` use `draft` instead.
+
+### 2016/07/04 - Version 2.2
+> Commit 68c4499d170bf167d2410741d573cdf9402d6e80
+*   Support for including multiple supervisor and/or advisor
+*   Fixes `maketitle` in thesis.tex
+
+### 2015/06/20 - Version 2.1
+> Commit a5feb0732d7f13fa9703fddcee703224c00b83dd
+*   Support for including supervisor and/or advisor
+
+### 2015/06/20 - Version 2.0.1
+> Commit 0e0d1e617acb42b034870ea325271cce8d3d8d8e
+*   Fixed centering of year on front page - Issue #16
+
+### 2015/06/20 - Version 2.0
+> Commit f4723434f92eedc163fdcb74c7ac04c8d842bc05
+*   XeLaTeX and LuaLaTeX support
+*   College crest + University crest support
+
 ### 2014/12/02 - Version 1.4.5
 > Commit 427230cae012194a2e433ec001677c43ffd8250e
 *   Fixed issue with the misaligned date and college in the frontpage.

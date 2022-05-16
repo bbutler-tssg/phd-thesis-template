@@ -9,6 +9,14 @@
   \setFancyHdr % To apply fancy header after geometry package is loaded
 \fi
 
+% Add spaces between paragraphs
+%\setlength{\parskip}{0.5em}
+% Ragged bottom avoids extra whitespaces between paragraphs
+\raggedbottom
+% To remove the excess top spacing for enumeration, list and description
+%\usepackage{enumitem}
+%\setlist[enumerate,itemize,description]{topsep=0em}
+
 % *****************************************************************************
 % ******************* Fonts (like different typewriter fonts etc.)*************
 
@@ -17,7 +25,20 @@
 \ifsetCustomFont
   % Set your custom font here and use `customfont' in options. Leave empty to
   % load computer modern font (default LaTeX font).
-  \RequirePackage{helvet}
+  %\RequirePackage{helvet}
+
+  % For use with XeLaTeX
+  %  \setmainfont[
+  %    Path              = ./libertine/opentype/,
+  %    Extension         = .otf,
+  %    UprightFont = LinLibertine_R,
+  %    BoldFont = LinLibertine_RZ, % Linux Libertine O Regular Semibold
+  %    ItalicFont = LinLibertine_RI,
+  %    BoldItalicFont = LinLibertine_RZI, % Linux Libertine O Regular Semibold Italic
+  %  ]
+  %  {libertine}
+  %  % load font from system font
+  %  \newfontfamily\libertinesystemfont{Linux Libertine O}
 \fi
 
 % *****************************************************************************
@@ -25,12 +46,8 @@
 
 % ************************* Algorithms and Pseudocode **************************
 
-%\usepackage[algochapter, algoruled, noend]{algorithm2e}
+%\usepackage{algpseudocode}
 
-\usepackage{algpseudocode}
-
-\usepackage[chapter]{algorithm}
-\usepackage{algorithmicx}
 
 % ********************Captions and Hyperreferencing / URL **********************
 
@@ -66,11 +83,7 @@
 %\usepackage{tabularx}
 
 
-% ***************************** Math and SI Units ******************************
-
-\usepackage{amsfonts}
-\usepackage{amsmath}
-\usepackage{amssymb}
+% *********************************** SI Units *********************************
 \usepackage{siunitx} % use this package module for SI units
 
 
@@ -105,31 +118,12 @@
 % If you would like to use biblatex for your reference management, as opposed to the default `natbibpackage` pass the option `custombib` in the document class. Comment out the previous line to make sure you don't load the natbib package. Uncomment the following lines and specify the location of references.bib file
 
 %\RequirePackage[backend=biber, style=numeric-comp, citestyle=numeric, sorting=nty, natbib=true]{biblatex}
-%\bibliography{References/references} %Location of references.bib only for biblatex
+%\addbibresource{References/references} %Location of references.bib only for biblatex, Do not omit the .bib extension from the filename.
 
 \fi
 
 % changes the default name `Bibliography` -> `References'
-%\renewcommand{\bibname}{References}
-
-
-% *****************************************************************************
-% *************** Changing the Visual Style of Chapter Headings ***************
-% This section on visual style is from https://github.com/cambridge/thesis
-
-% Uncomment the section below. Requires titlesec package.
-
-%\RequirePackage{titlesec}
-%\newcommand{\PreContentTitleFormat}{\titleformat{\chapter}[display]{\scshape\Large}
-%{\Large\filleft{\chaptertitlename} \Huge\thechapter}
-%{1ex}{}
-%[\vspace{1ex}\titlerule]}
-%\newcommand{\ContentTitleFormat}{\titleformat{\chapter}[display]{\scshape\huge}
-%{\Large\filleft{\chaptertitlename} \Huge\thechapter}{1ex}
-%{\titlerule\vspace{1ex}\filright}
-%[\vspace{1ex}\titlerule]}
-%\newcommand{\PostContentTitleFormat}{\PreContentTitleFormat}
-%\PreContentTitleFormat
+\renewcommand{\bibname}{References}
 
 
 % ******************************************************************************
@@ -145,7 +139,7 @@
 
 % ********************** TOC depth and numbering depth *************************
 
-\setcounter{secnumdepth}{3}
+\setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{2}
 
 
@@ -163,9 +157,9 @@
 %\renewcommand{\appendixtocname}{List of appendices}
 %\renewcommand{\appendixname}{Appndx}
 
-% ******************************** Draft Mode **********************************
+% *********************** Configure Draft Mode **********************************
 
-% Uncomment to disable figures in `draftmode'
+% Uncomment to disable figures in `draft'
 %\setkeys{Gin}{draft=true}  % set draft to false to enable figures in `draft'
 
 % These options are active only during the draft mode
@@ -183,7 +177,7 @@
 %\SetDraftGrayScale{0.8}
 
 
-%% Todo notes functionality
+% ******************************** Todo Notes **********************************
 %% Uncomment the following lines to have todonotes.
 
 %\ifsetDraft
@@ -195,3 +189,22 @@
 %\fi
 
 % Example todo: \mynote{Hey! I have a note}
+
+% ******************************** Highlighting Changes **********************************
+%% Uncomment the following lines to be able to highlight text/modifications.
+%\ifsetDraft
+%  \usepackage{color, soul}
+%  \newcommand{\hlc}[2][yellow]{{\sethlcolor{#1} \hl{#2}}}
+%  \newcommand{\hlfix}[2]{\texthl{#1}\todo{#2}}
+%\else
+%  \newcommand{\hlc}[2]{}
+%  \newcommand{\hlfix}[2]{}
+%\fi
+
+% Example highlight 1: \hlc{Text to be highlighted}
+% Example highlight 2: \hlc[green]{Text to be highlighted in green colour}
+% Example highlight 3: \hlfix{Original Text}{Fixed Text}
+
+% *****************************************************************************
+% ******************* Better enumeration my MB*************
+\usepackage{enumitem}

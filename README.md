@@ -1,23 +1,32 @@
-CUED/WIT PhD thesis template
+CUED PhD thesis template
 ========================
-> A LaTeX PhD thesis template for Cambridge University Engineering Department,
-modified for WIT/TSSG students.
 
+[![Join the chat at https://gitter.im/kks32/phd-thesis-template](https://badges.gitter.im/kks32/phd-thesis-template.svg)](https://gitter.im/kks32/phd-thesis-template?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+> A LaTeX / XeLaTeX / LuaLaTeX PhD thesis template for Cambridge University Engineering Department.
+
+[![Build Status](https://api.travis-ci.org/kks32/phd-thesis-template.svg)](https://travis-ci.org/kks32/phd-thesis-template)
 [![License MIT](http://img.shields.io/badge/license-MIT-brightgreen.svg)](license.md)
-[![Version](http://img.shields.io/badge/version-1.4.1-brightgreen.svg)](https://github.com/bbutler-tssg/phd-thesis-template/releases/latest)
+[![Version](http://img.shields.io/badge/version-2.2-brightgreen.svg)](https://github.com/kks32/phd-thesis-template/releases/latest)
+
 ## Author(s)
-*   Krishna Kumar (original; customised for WIT/TSSG by Bernard Butler)
+*   Krishna Kumar
 
 --------------------------------------------------------------------------------
 ## Features
 
-*   Layout, headings etc. inspired by Alan Davy's thesis
+*   Conforms to the Student Registry PhD dissertation guidelines and CUED PhD guidelines
+
+*   Supports LaTeX, XeLaTeX and LuaLaTeX
 
 *   Adaptive Title Page: Title page adapts to title length
+
+*   Title page with both College and University crests.
 
 *   Print / On-line version: Different layout and hyper-referencing styles
 
 *   Pre-defined and custom fonts (Times / Fourier / Latin Modern) with math support
+
+*   Supports system fonts (XeLaTeX)
 
 *   Pre-defined and custom bibliography style support (authoryear / numbered / custom)
 
@@ -31,11 +40,32 @@ modified for WIT/TSSG students.
 
 *   Draft mode: Draft water mark, timestamp, version numbering and line numbering
 
-*   Build using arara, latexmk or manually
+*   Add supervisor and/or advisor to your PhD thesis or MPhil report
+
+*   A LyX Template is now available at [https://github.com/kks32/PhDThesisLyX/](https://github.com/kks32/PhDThesisLyX/)
 
 --------------------------------------------------------------------------------
 
-## Building your thesis
+## Building your thesis - XeLaTeX
+
+### Using latexmk (Unix/Linux/Windows)
+
+This template supports `XeLaTeX` compilation chain. To generate  PDF run
+
+    latexmk -xelatex thesis.tex
+    makeindex thesis.nlo -s nomencl.ist -o thesis.nls
+    latexmk -xelatex -g thesis.tex
+
+## Building your thesis - LuaLaTeX
+
+### Using latexmk (Unix/Linux/Windows)
+
+This template supports `LuaLaTeX` compilation chain. To generate  PDF run
+
+    latexmk -pdflatex=lualatex -pdf thesis.tex
+
+
+## Building your thesis - LaTeX / PDFLaTeX
 
 ### Using latexmk (Unix/Linux/Windows)
 
@@ -43,21 +73,7 @@ This template supports `latexmk`. To generate DVI, PS and PDF run
 
     latexmk -dvi -ps -pdf thesis.tex
 
-Alternatively, it is possible to use xelatex to generate the pdf, using
 
-    latexmk -xelatex thesis.tex
-
-**The `xelatex` build will fail if there are accented characters in the
-source and the `useSystemFonts` option is not passed to `PhDThesisPSnPDF`.**
-
-### Using ARARA (Unix/Linux/Windows)
-
-This template supports `arara`. You can edit the arara commands in `thesis.tex` to suit your needs. Default is set to LATEX >> DVI >> PS2PDF with `glossaries` and make index support.
-
-    arara -v thesis.tex
-
-**You can choose other types of build, e.g., using `pdflatex` by
-commenting/uncommenting the relevant lines at the beginning of `thesis.tex`.**
 
 ### Using the make file (Unix/Linux)
 
@@ -69,7 +85,27 @@ To build the `PDF` version of your thesis, run:
     make
 
 
-This build procedure uses `pdflatex` and will produce `thesis.pdf`.
+This build procedure uses `pdflatex` with `bibtex` and will produce `thesis.pdf`.
+To use `pdflatex` with `biblatex`, you should run:
+
+    make BIB_STRATEGY=biblatex
+
+To use `XeLaTeX`, you should run:
+
+    make BUILD_STRATEGY=xelatex
+
+or with `biblatex`
+
+    make BUILD_STRATEGY=xelatex BIB_STRATEGY=biblatex
+
+To use `LuaLaTeX`, you should run:
+
+    make BUILD_STRATEGY=lualatex
+
+or with `biblatex`
+
+    make BUILD_STRATEGY=lualatex BIB_STRATEGY=biblatex
+
 
 To produce `DVI` and `PS` versions of your document, you should run:
 
@@ -85,10 +121,8 @@ To clean unwanted clutter (all LaTeX auto-generated files), run:
 
     make clean
 
-__Note__: the `Makefile` itself is taken from and maintained at
+__Note__: the `Makefile` itself is take from and maintained at
 [here](http://code.google.com/p/latex-makefile/).
-
-**Known bug: the Makefile needs to be updated to handle the new glossaries process**
 
 ### Shell script for PDFLaTeX (Unix/Linux)
 
@@ -98,8 +132,6 @@ Usage: `sh ./compile-thesis.sh [OPTIONS] [filename]`
 
 [option]  clean: removes temporary files - no filename required
 
-**Known bug: the shell script needs to be updated to handle the new glossaries process**
-
 ### Using the batch file on Windows OS (PDFLaTeX)
 
 *    Open command prompt and navigate to the directory with the tex file. Run:
@@ -108,7 +140,6 @@ Usage: `sh ./compile-thesis.sh [OPTIONS] [filename]`
 
 *    Alternatively, double click on `compile-thesis-windows.bat`
 
-**Known bug: the batch script needs to be updated to handle the new glossaries process**
 
 -------------------------------------------------------------------------------
 
@@ -122,7 +153,7 @@ The class file, `PhDThesisPSnPDF`, is based on the standard `book` class
 
 It supports the following custom options in the documentclass in thesis.tex:
 
-(Usage `\documentclass[a4paper,11pt,print]{Classes/PhDThesisPSnPDF}`)
+(Usage `\documentclass[a4paper,11pt,print]{PhDThesisPSnPDF}`)
 
 *   `a4paper` (default as per the University guidelines) or `a5paper`: Paper size
 
@@ -169,9 +200,19 @@ The front page (title page) resizes to fit your title length. You can modify the
 
 * `\subtitle` (optional): Adds a subtitle to your thesis.
 
-* `\college` (optional): This option does not apply to WIT.
+* `\college` (optional): This option adds the name of your college on the bottom left.
 
 If `\college` is defined, the bottom of the title page will look like this:
+
+        King's College 			                                         2014
+
+If `\college` is undefined or blank, the `degreedate` will be centered.
+
+                                        2014
+
+The template offers support to having both the college and university crests or just one of the crests.
+
+* `\collegeshield` (optional): Includes college crest in addition to the university crest. This reformats the front page layout.
 
 ### Abstract separate
 
@@ -193,7 +234,7 @@ If `\college` is defined, the bottom of the title page will look like this:
 			\includeonly{Chapter3/chapter3}
 		\fi
 
-### Draft 
+### Draft
 
 `draft` adds a watermark `draft` text with timestamp and version number at the top or
 the bottom of the page. Pagewise line numbering is added on every page. `draft` settings can be tweaked in the `preamble.tex`.
@@ -244,11 +285,9 @@ the bottom of the page. Pagewise line numbering is added on every page. `draft` 
 
 * If you would like to use biblatex instead of natbib. Pass the option `custombib` in the documentclass. In the `preamble.tex` file, edit the custombib section. Make sure you don't load the natbib package and you can specify the layout of your references in `thesis.tex` in the reference section. If you are using `biber` as backend, run `pdflatex thesis.tex >> biber thesis >> pdflatex thesis.tex >> biber thesis >> pdflatex thesis.tex`. If you are using the default natbib package, don't worry about this.
 
-* For WIT, authoryear citation style is required and is the one used in thesis.tex. though it is possible to override this setting.
-
 ### Choosing the page style
 
-`PhDThesisPSnPDF` defines 3 different page styles (header and footer). The following definition is for `twoside` layout.
+`PhDThesisPSnPDF` defines 3 different page styles (header and footer). The following definition is for `twoside` layout. To choose a page style, include it in the `documentclass` options: `\documentclass[PageStyleI]{PhDThesisPSnPDF}`. Alternatively, page style can be changed by adding `\pagestyle{PageStyleI}` or `\pagestyle{PageStyleII}` in `thesis.tex`. Note: Using `\pagestyle` command will override `documentclass` options when used globally.
 
 * `default (leave empty)`: For Page Numbers in Header (Left Even, Right Odd) and Chapter Name in Header (Right Even) and Section #. Section Name (Left Odd). Blank Footer.
 
@@ -339,15 +378,13 @@ The visual style of chapter headings can be modified using the `titlesec` packag
 *   You can change the Title of Nomenclature to Notations or Symbols in the `preamble.tex` using:
 
         \renewcommand\nomname{Symbols}
- 
+
  TexStudio's default compile option doesn't include `nomenclature`, to compile your document with the nomenclature, do the following:
- 
+
 		Options >> Configure TexStudio >> Build >> User Commands >> add user command
 In `add user command` type `makenomeclature:makenomenclature` on the left pane and `makeindex %.nlo -s nomencl.ist -o %.nls` on the execution side. Now you can run the user defined command `makenomenclature` from `Tools >> User >> makenomenclature`.
 
 Alternatively, you can use the `compile-thesis-windows.bat` file or run `make` on Unix / Linux / MacOS
-
-**This section is obsolete - `nomenclature` has been superseded by `glossaries`**
 
 ## To-do Notes
 
@@ -362,33 +399,21 @@ To include custom to-do notes in your pdf document use  `\mynote{Hey! I have a n
 		\newcommand{\listoftodos}{}
 	\fi
 
-## Installing and Using this template
+## Git hooks
 
-### Installation
+You rarely want to commit changes to your TeX files which are not reflected in the PDF included in the repo.
+You can automate this process, among other things, with a git hook.
+Install the hook with `make hooks` (or see how to do it in `./hooks/install.sh`).
+Now every time you commit, if any files affecting your build have changed in this commit
+and those changes are more recent than the last modification of `thesis.pdf`,
+the default `make` target will be run and changes to `thesis.pdf` will be `git add`ed.
 
-1. Clone or fork from this [repo](https://github.com/bbutler-tssg/phd-thesis-template-fork-wit).
+Currently, changes to any tex/pdf/eps/png/cls files are picked up.
+This can be changed in `./hooks/pre-commit`.
 
-2. In their local (working) repo, users should checkout and switch to the relevant tracking branch:
+Skip the hook with `git commit --no-verify`.
 
-    git checkout -b witTssg origin/witTssg
-
-3. Optionally, they can install `PhDThesisPSnPDF.cls` in their local `texmf` tree.
-
-### Usage
-
-The advice in this section applies to the user's local (working) copy.
-
-1.  Enter personal details in `thesis-info.tex`.
-
-2.  Put configuration settings (packages to use, etc.) in  `Preamble/preamble.tex`.
-
-3.  Write text content in tex files such as `Abstract/abstract.tex` and `Chapter2/chapter2.tex`.
-
-4.  Put diagrams or other graphical content in `Figs` directories.
-
-5.  Put bibliographic references in the `References` directory.
-
-6.  Manage the overall thesis from the master `thesis.tex` document.
+`bash`-only.
 
 ## General guidelines
 [Why is it important to follow good practices and not get killed by a Velociraptor ;)](http://www.xkcd.com/292/)
@@ -420,10 +445,10 @@ The advice in this section applies to the user's local (working) copy.
 #### _Q2_: Where can I find newer versions of the University of Cambridge crest/logos?
 
 The university updates its crest every now and then. You can find up-to-date
-logos on [this page](http://www.admin.cam.ac.uk/offices/communications/services/logos/)
+logos on [this page](http://www.cam.ac.uk/brand-resources/about-the-logo/logo-downloads)
 (subject to change without notice).
 
-Download and exchange the new logos with `CUni.eps` and/or `CUni.pdf`. I'll try to keep the crest up to date.
+Download and exchange the new logos with `University_Crest.eps` and/or `University_Crest.pdf`. I'll try to keep the crest up to date.
 
 #### _Q3_: Where can I find the guidelines to submit my thesis and requirements?
 
@@ -444,7 +469,25 @@ or
 or
     `texcount -inc *.tex` (eg., result 2341 words)
 
-#### _Q5_: I found a bug in the template. Where do I report bugs?
+#### _Q5_: How do I use a system font (libertine)?
+
+To use a system font (open type) font with XeLaTeX, please select `customfont` option in the `documentclass` in `thesis.tex`. Add the path and font name to the custom font definition in `preamble.tex`
+
+    \ifsetCustomFont
+      \setmainfont[
+        Path              = ./libertine/opentype/,
+        Extension         = .otf,
+        UprightFont = LinLibertine_R,
+        BoldFont = LinLibertine_RZ, % Regular Semibold
+        ItalicFont = LinLibertine_RI,
+        BoldItalicFont = LinLibertine_RZI, % Regular Semibold Italic
+      ] {libertine}
+      \newfontfamily\libertinesystemfont{Linux Libertine O}
+    \fi
+
+Please use XeLaTeX tool chain with LaTeXmk.
+
+#### _Q6_: I found a bug in the template. Where do I report bugs?
 
 You can report issues at
 [our GitHub repository](https://github.com/kks32/phd-thesis-template).
@@ -456,30 +499,30 @@ You can also mail
 --------------------------------------------------------------------------------
 ## Troubleshooting warnings
 
-#### _W1_: I get the LaTeX Warning: You have requested document class `Classes/PhDThesisPSnPDF`, but the document class provides `PhDThesisPSnPDF`, should I be concerned?
-
-No! Do nothing, or if you don't want any warning messages change the line near the top of the class file to \ProvidesClass{Classes/PhDthesisPSnPDF} if you're not going to install the class file in a more standard location. You can install it in a standard location like `/usr/share/texmf/tex/latex/` and run `texhash` to reconfigure.
-
-#### _W2_:I get the package Fancyhdr Warning: \fancyhead's `E` option without twoside option is useless on input line \# or \#. What should I do?
+#### _W1_:I get the package Fancyhdr Warning: \fancyhead's `E` option without twoside option is useless on input line \# or \#. What should I do?
 
 Nothing. The warning is because the twoside option is also defined in the class, although only the oneside option is currently used.
 
-#### _W3_: I get the Class PhDThesisPSnPDF Warning: Unknown or non-standard option 'something'. Will see if I can load it from the book class. If you get a warning unused global option(s): `something` then the option is not supported! on input line \#.
+#### _W2_: I get the Class PhDThesisPSnPDF Warning: Unknown or non-standard option 'something'. Will see if I can load it from the book class. If you get a warning unused global option(s): `something` then the option is not supported! on input line \#.
 
 You are either trying to use a undefined option or a non-standard option which is in the book class but not defined in the PhD Thesis Template. If it can be used it will be loaded and you will get no further warnings. If not, the option you chose is unavailable.
 
 
-#### _W4_: I get LaTeX Warning: Unused global option(s):[something].
+#### _W3_: I get LaTeX Warning: Unused global option(s):[something].
 
 You are trying to load an option that is not supported in the PhDThesisClass and the Book Class. Are you sure you are using the right option? Check your spelling!
 
-#### _W5_: I get I'm skipping whatever remains of this command line \# of file thesis.aux \@input{Chapter1/chapter1.aux}
+#### _W4_: I get I'm skipping whatever remains of this command line \# of file thesis.aux \@input{Chapter1/chapter1.aux}
 
 If you are generating a separate abstract for your thesis submission, ignore this warning and good luck with your submission. If you are compiling your thesis and see this warning, please remove the option `abstract` from the document class.
 
-#### _W6_: I get blank pages between chapters
+#### _W5_: I get blank pages between chapters
 
 This is normal for a book class. Usually, a new chapter in a book always starts on the right hand side, which is why you see a blank page. You can remove the extra blank page by passing `openany` option to the documentclass. This works for double sided printing. However, if you are printing on a single side, please pass `oneside` option to the document class.
+
+#### _W6_: My references aren't listed in the ordered in which I cite them
+
+This is controlled by the bibliography style. Please use `\bibliographystyle{unsrt}` in `thesis.tex` instead of `apalike`. This applicable only for numerically sorted references.
 
 --------------------------------------------------------------------------------
 
