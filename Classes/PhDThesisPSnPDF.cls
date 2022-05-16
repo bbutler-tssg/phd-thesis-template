@@ -1178,7 +1178,7 @@ wish to left align your text}
 \newsavebox{\PHD@author}
 \begin{lrbox}{\PHD@author}
   \begin{minipage}[c]{\textwidth}
-    \centering \Large \bfseries{\@author}
+    \centering \LARGE \bfseries{\@author}
       \vspace{0.5em}   
   \end{minipage}
 \end{lrbox}
@@ -1223,8 +1223,8 @@ wish to left align your text}
 \newsavebox{\PHD@dept}
 \begin{lrbox}{\PHD@dept}
   \begin{minipage}[c]{\textwidth}
-    \centering {\large \@dept \par}
-	       {\large \@university \par}
+    \centering {\Large \@dept \par}
+	       {\Large \@university \par}
   \end{minipage}
 \end{lrbox}
 
@@ -1234,7 +1234,7 @@ wish to left align your text}
   \begin{minipage}[c]{\textwidth}
     \begin{center}
       \large \submissiontext \par
-      \large \textit {\@degreetitle} \par
+      \Large \textit {\@degreetitle} \par
     \end{center}
   \end{minipage}
 \end{lrbox}

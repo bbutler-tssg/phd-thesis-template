@@ -9,7 +9,7 @@ CUED PhD thesis template
 [![Version](http://img.shields.io/badge/version-2.2-brightgreen.svg)](https://github.com/kks32/phd-thesis-template/releases/latest)
 
 ## Author(s)
-*   Krishna Kumar
+*   Krishna Kumar, with modifications by Bernard Butler (SETU) to generate dissertations for SETU.
 
 --------------------------------------------------------------------------------
 ## Features
@@ -45,6 +45,20 @@ CUED PhD thesis template
 *   A LyX Template is now available at [https://github.com/kks32/PhDThesisLyX/](https://github.com/kks32/PhDThesisLyX/)
 
 --------------------------------------------------------------------------------
+
+## To use the SETU version
+
+Different versions of the template can be obtained from each branch:
+
+- CUED: use the `master` branch
+
+- WIT: use the `witTssg` branch
+
+- SETU: use the `SETU` branch
+
+To change to the appropriate branch, say the SETU branch, use
+
+    git checkout SETU
 
 ## Building your thesis - XeLaTeX
 

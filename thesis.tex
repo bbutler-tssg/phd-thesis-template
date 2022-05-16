@@ -1,3 +1,21 @@
+% arara: clean: { files: [ thesis.aux, thesis.bbl, thesis.blg, thesis.fdb_latexmk, thesis.fls, thesis.idx, thesis.ilg, thesis.ind, thesis.loa, thesis.lof, thesis.log, thesis.lol, thesis.lot, thesis.nlo, thesis.nls, thesis.out, thesis.toc, thesis.xdv] }
+%%% arara: latex:  { shell: yes }
+% arara: pdflatex:  { shell: yes }
+%*arara: xelatex:  { shell: yes }
+% arara: bibtex
+%%% arara: latex
+% arara: pdflatex:  { shell: yes }
+%*arara: xelatex
+% arara: makeindex
+%%% arara: latex:  { shell: yes }
+% arara: pdflatex:  { shell: yes }
+%*arara: xelatex:  { shell: yes }
+%%% arara: latex:  { shell: yes }
+%%% arara: dvips
+%%% arara: ps2pdf
+% arara: pdflatex:  { shell: yes }
+%*arara: xelatex:  { shell: yes }
+
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
 
